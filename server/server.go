@@ -36,8 +36,6 @@ func CreateServer() *mux.Router {
 		log.Fatal(err)
 	}
 
-	defer db.Close()
-
 	h := handlers.CreateNewHandler(db)
 	CreateUserHandler(h, router)
 

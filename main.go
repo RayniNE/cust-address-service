@@ -6,8 +6,16 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/raynine/customeraddresses/server"
 )
+
+func init() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Panic(err)
+	}
+}
 
 func main() {
 	log.Println("-- Creating Server -- ")
