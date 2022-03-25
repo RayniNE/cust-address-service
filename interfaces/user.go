@@ -7,4 +7,5 @@ type UsersRepo interface {
 	CreateUser(*models.User) (int64, error)
 	GetUserAddresses(int64) ([]*models.Address, error)
 	UpdateUser(*models.User) error
+	GetAllUsers() ([]*models.User, error)
 }

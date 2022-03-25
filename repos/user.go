@@ -17,6 +17,43 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 	}
 }
 
+func (u *UserRepo) GetAllUsers() ([]*models.User, error) {
+
+	users := make([]*models.User, 0)
+
+	rows, err := u.DB.Query("SELECT id, name, last_name FROM user")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		user := &models.User{}
+		err = rows.Scan(
+			&user.Id,
+			&user.Name,
+			&user.Lastname,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	for _, user := range users {
+
+		addresses, err := u.GetUserAddresses(user.Id)
+		if err != nil {
+			return nil, err
+		}
+
+		user.Addresses = addresses
+	}
+
+	return users, nil
+}
 func (u *UserRepo) GetUserById(userId int64) (*models.User, error) {
 
 	user := &models.User{}

@@ -65,3 +65,14 @@ func (h *Handler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 }
+
+func (h *Handler) GetAllUsers(w http.ResponseWriter, r *http.Request) {
+
+	users, err := h.UserRepo.GetAllUsers()
+	if err != nil {
+		helpers.EncodeResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.EncodeResponse(w, http.StatusCreated, users)
+}
