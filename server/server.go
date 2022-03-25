@@ -44,9 +44,9 @@ func CreateServer() *mux.Router {
 
 func CreateUserHandler(h *handlers.Handler, router *mux.Router) {
 	userRouter := router.PathPrefix("/user").Subrouter()
-	userRouter.HandleFunc("/", h.CreateUser).Methods("POST")
-	userRouter.HandleFunc("/all", h.GetAllUsers).Methods("GET")
-	userRouter.HandleFunc("/{id}", h.GetUserById).Methods("GET")
-	userRouter.HandleFunc("/{id}/adresses", h.GetUserAddresses).Methods("GET")
-	userRouter.HandleFunc("/{id}/", h.UpdateUser).Methods("POST")
+	userRouter.HandleFunc("/", h.EnableCors(h.CreateUser)).Methods("POST")
+	userRouter.HandleFunc("/all", h.EnableCors(h.GetAllUsers)).Methods("GET")
+	userRouter.HandleFunc("/{id}", h.EnableCors(h.GetUserById)).Methods("GET")
+	userRouter.HandleFunc("/{id}/adresses", h.EnableCors(h.GetUserAddresses)).Methods("GET")
+	userRouter.HandleFunc("/{id}/", h.EnableCors(h.UpdateUser)).Methods("POST")
 }
